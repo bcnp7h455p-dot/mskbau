@@ -17,10 +17,10 @@
         +(l.images ? l.images.map(function(src,i){ return '<img class="lc-img lc-img-'+i+'" src="'+src+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.5s ease;opacity:'+(i===0?1:0)+'" data-idx="'+i+'"/>'; }).join('') : '<img class="lc-img" src="'+l.img+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.8s ease"/>')+(l.images ? '<div class="lc-dots">'+l.images.map(function(_,i){ return '<span class="lc-dot'+(i===0?' active':'')+'" data-idx="'+i+'"></span>'; }).join('')+'</div>'+'<button class="lc-arrow lc-arrow-prev" aria-label="prev">&#8249;</button><button class="lc-arrow lc-arrow-next" aria-label="next">&#8250;</button>' : '')        +'<div class="lc-ov"></div>'
         +'<div class="lc-body">'
         +'<div class="lc-name">'+l.name+'</div>'
-        +'<div class="lc-area">'+l.area+' â¢ Ð¼. '+l.metro+'</div>'
+        +'<div class="lc-area">'+l.area+' • м. '+l.metro+'</div>'
         +'<div class="lc-desc">'+l.desc+'</div>'
         +'<div class="lc-cap">'+l.cap+'</div>'
-        +'<a href="#mb2-booking" class="lc-btn">Ð£Ð·Ð½Ð°ÑÑ ÑÑÐ¾Ð¸Ð¼Ð¾ÑÑÑ</a>'
+        +'<a href="#mb2-booking" class="lc-btn">Узнать стоимость</a>'
         +'</div></div>';
     }).join('');
 
