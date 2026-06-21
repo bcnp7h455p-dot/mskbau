@@ -56,8 +56,12 @@
     var nextBtn = card.querySelector('.lc-arrow-next');
     if(prevBtn) prevBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); show(cur-1); });
     if(nextBtn) nextBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); show(cur+1); });
-    var autoTimer = setInterval(function(){ show(cur+1); }, 4000);
-    card.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
+    var autoTimer = null;
+    function startAuto(){ if(autoTimer) return; autoTimer = setInterval(function(){ show(cur+1); }, 1800); }
+    function stopAuto(){ clearInterval(autoTimer); autoTimer = null; }
+    card.addEventListener('mouseenter', startAuto);
+    card.addEventListener('mouseleave', stopAuto);
+    card.addEventListener('touchstart', startAuto, {passive:true});
   });
 }
 
