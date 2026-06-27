@@ -372,12 +372,4 @@
   #mb2 .form-box{flex:1.3}
   #mb2 .footer{padding:2.5rem 4rem}
   #mb2 .divider{margin:0 4rem}
-  #mb2 .lc-desc{display:none}
-  #mb2 .loft-card:hover .lc-desc{display:block}
-}
-
-/* ── TOUCH: убираем hover-эффекты на мобиле ── */
-@media(hover:none){
-  #mb2 .loft-card:hover .lc-img{transform:none}
-  #mb2 .loft-card:hover .lc-desc{display:none}
-}
+  }
