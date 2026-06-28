@@ -23,6 +23,7 @@
         +'<a href="#mb2-booking" class="lc-btn">Узнать стоимость</a>'
         +'</div></div>';
     }).join('');
+    initLightbox(grid, lofts);
 
     // hover effect
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
@@ -80,4 +81,54 @@
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded', function(){ renderLofts(); initForm(); });
   } else { renderLofts(); initForm(); }
+
+  function initLightbox(grid, lofts){
+    var lb = document.getElementById("mb-lightbox");
+    if(!lb){
+      lb = document.createElement("div");
+      lb.id = "mb-lightbox";
+      lb.innerHTML = '<div class="lb-close">\u2715</div><div class="lb-arrow lb-prev">\u2039</div><div class="lb-arrow lb-next">\u203a</div><img/><div class="lb-counter"></div>';
+      document.body.appendChild(lb);
+    }
+    var lbImg = lb.querySelector("img");
+    var lbCounter = lb.querySelector(".lb-counter");
+    var lbClose = lb.querySelector(".lb-close");
+    var lbPrev = lb.querySelector(".lb-prev");
+    var lbNext = lb.querySelector(".lb-next");
+    var curImages = [];
+    var curIdx = 0;
+    function show(i){
+      if(!curImages.length) return;
+      curIdx = (i + curImages.length) % curImages.length;
+      lbImg.src = curImages[curIdx];
+      lbCounter.textContent = (curIdx+1) + " / " + curImages.length;
+      lbCounter.style.display = curImages.length > 1 ? "block" : "none";
+    }
+    function openLb(images, startIdx){
+      curImages = images;
+      show(startIdx);
+      lb.classList.add("open");
+    }
+    function closeLb(){ lb.classList.remove("open"); }
+    lbClose.addEventListener("click", closeLb);
+    lbPrev.addEventListener("click", function(e){ e.stopPropagation(); show(curIdx-1); });
+    lbNext.addEventListener("click", function(e){ e.stopPropagation(); show(curIdx+1); });
+    lb.addEventListener("click", function(e){ if(e.target === lb) closeLb(); });
+    document.addEventListener("keydown", function(e){
+      if(!lb.classList.contains("open")) return;
+      if(e.key === "Escape") closeLb();
+      if(e.key === "ArrowLeft") show(curIdx-1);
+      if(e.key === "ArrowRight") show(curIdx+1);
+    });
+    [].forEach.call(grid.querySelectorAll(".loft-card"), function(card, cardIdx){
+      var l = lofts[cardIdx];
+      var images = (l.images && l.images.length) ? l.images : [l.img];
+      [].forEach.call(card.querySelectorAll(".lc-img"), function(imgEl, i){
+        imgEl.addEventListener("click", function(e){
+          e.preventDefault(); e.stopPropagation();
+          openLb(images, i);
+        });
+      });
+    });
+  }
 })();
