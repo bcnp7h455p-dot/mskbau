@@ -133,7 +133,7 @@
 }
 #mb2 .loft-card{
   position:relative;overflow:hidden;
-  background:#1a1a1a;aspect-ratio:16/9;
+  background:#1a1a1a;aspect-ratio:16/9;width:100%;display:block;
   cursor:pointer;
 }
 #mb2 .lc-img{
