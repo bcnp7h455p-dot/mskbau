@@ -12,61 +12,114 @@
       {name:"Budda",area:"35 м²",cap:"до 20 гостей",metro:"Бауманская",desc:"Концептуальный лофт, в котором восточная атмосфера сочетается с лофт-стилем. Кирпичные стены, уютная личная веранда и качели в 5 минутах от метро Бауманская. Электрогриль входит в стоимость.",img:"https://static.tildacdn.com/tild3165-3066-4961-a337-313731336261/1_.jpg",images:["https://static.tildacdn.com/tild3165-3066-4961-a337-313731336261/1_.jpg","https://static.tildacdn.com/tild3162-3465-4331-a664-623230313662/2.jpg","https://static.tildacdn.com/tild6261-3836-4537-a564-633161303865/3.jpg","https://static.tildacdn.com/tild3463-6439-4963-a333-643362313630/4.jpg","https://static.tildacdn.com/tild3466-3939-4930-b065-663361613065/5.jpg","https://static.tildacdn.com/tild6461-3830-4263-b565-646263336339/6.jpg","https://static.tildacdn.com/tild6230-3261-4865-a531-643739306166/_DSC1252.jpg"],price:"уточняется"},
       {name:"Sava",area:"30 м²",cap:"до 20 гостей",metro:"Бауманская",desc:"Уютный лофт с личной верандой в 5 минутах от метро Бауманская. Здесь цвет решает всё — насыщенные оттенки, необычные детали в декоре и уютные качели. Веранда с запахом жареного мяса и без суеты. Электрогриль входит в стоимость.",img:"https://static.tildacdn.com/tild3534-3064-4439-b837-376538343831/_DSC0190.jpg",images:["https://static.tildacdn.com/tild3534-3064-4439-b837-376538343831/_DSC0190.jpg","https://static.tildacdn.com/tild6535-6533-4432-b338-306435353630/_DSC0209.jpg","https://static.tildacdn.com/tild6634-3836-4365-b030-373964643133/_DSC0246.jpg","https://static.tildacdn.com/tild6532-3635-4538-b531-356632306239/_DSC0198.jpg","https://static.tildacdn.com/tild6461-3830-4263-b565-646263336339/6.jpg","https://static.tildacdn.com/tild3334-3035-4436-b965-626436383830/_DSC1241.jpg"],price:"уточняется"}
     ];
-    grid.innerHTML = lofts.map(function(l){
-      return '<div class="loft-card">'
-        +(l.images ? l.images.map(function(src,i){ return '<img class="lc-img lc-img-'+i+'" src="'+src+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.5s ease;opacity:'+(i===0?1:0)+'" data-idx="'+i+'"/>'; }).join('') : '<img class="lc-img" src="'+l.img+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.8s ease"/>')+(l.images ? '<div class="lc-dots">'+l.images.map(function(_,i){ return '<span class="lc-dot'+(i===0?' active':'')+'" data-idx="'+i+'"></span>'; }).join('')+'</div>'+'<button class="lc-arrow lc-arrow-prev" aria-label="prev">&#8249;</button><button class="lc-arrow lc-arrow-next" aria-label="next">&#8250;</button>' : '')        +'<div class="lc-ov"></div>'
+    grid.innerHTML = lofts.map(function(l, idx){
+      return '<div class="loft-card" data-idx="'+idx+'">'
+        +'<img class="lc-img" src="'+l.img+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>'
+        +'<div class="lc-ov"></div>'
         +'<div class="lc-body">'
         +'<div class="lc-name">'+l.name+'</div>'
         +'<div class="lc-area">'+l.area+' • м. '+l.metro+'</div>'
-        +'<div class="lc-desc">'+l.desc+'</div>'
-        +'<div class="lc-cap">'+l.cap+'</div>'
-        +'<a href="#mb2-booking" class="lc-btn">Узнать стоимость</a>'
         +'</div></div>';
     }).join('');
-    initLightbox(grid, lofts);
 
-    // hover effect
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       var img = card.querySelector('.lc-img');
       card.addEventListener('mouseenter', function(){ img.style.transform='scale(1.06)'; });
       card.addEventListener('mouseleave', function(){ img.style.transform=''; });
-    });
-  
-
-  // carousel logic
-  [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
-    var imgs = card.querySelectorAll('.lc-img');
-    if(imgs.length < 2) return;
-    var dots = card.querySelectorAll('.lc-dot');
-    var cur = 0;
-    function show(i){
-      i = (i + imgs.length) % imgs.length;
-      imgs[cur].style.opacity = 0;
-      if(dots[cur]) dots[cur].classList.remove('active');
-      cur = i;
-      imgs[cur].style.opacity = 1;
-      if(dots[cur]) dots[cur].classList.add('active');
-    }
-    [].forEach.call(dots, function(dot){
-      dot.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation();
-        show(parseInt(dot.getAttribute('data-idx'),10));
+      card.addEventListener('click', function(){
+        var idx = parseInt(card.getAttribute('data-idx'), 10);
+        openLoftModal(lofts[idx]);
       });
     });
-    var prevBtn = card.querySelector('.lc-arrow-prev');
-    var nextBtn = card.querySelector('.lc-arrow-next');
-    if(prevBtn) prevBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); show(cur-1); });
-    if(nextBtn) nextBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); show(cur+1); });
-    var autoTimer = null;
-    function startAuto(){ if(autoTimer) return; autoTimer = setInterval(function(){ show(cur+1); }, 1800); }
-    function stopAuto(){ clearInterval(autoTimer); autoTimer = null; }
-    card.addEventListener('mouseenter', startAuto);
-    card.addEventListener('mouseleave', stopAuto);
-    card.addEventListener('touchstart', startAuto, {passive:true});
-  });
-}
+  }
 
-  function initForm(){
+
+  function initModal(){
+    var modal = document.getElementById('mb-loftmodal');
+    if(!modal){
+      modal = document.createElement('div');
+      modal.id = 'mb-loftmodal';
+      modal.innerHTML = '<div class="lm-box">'
+        +'<div class="lm-close">\u2715</div>'
+        +'<div class="lm-gallery">'
+          +'<div class="lm-imgwrap"></div>'
+          +'<div class="lm-arrow lm-arrow-prev">\u2039</div>'
+          +'<div class="lm-arrow lm-arrow-next">\u203a</div>'
+          +'<div class="lm-counter"></div>'
+          +'<div class="lm-dots"></div>'
+        +'</div>'
+        +'<div class="lm-info">'
+          +'<div class="lm-name"></div>'
+          +'<div class="lm-area"></div>'
+          +'<div class="lm-desc"></div>'
+          +'<div class="lm-cap"></div>'
+          +'<div class="lm-price"></div>'
+          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'</div>'
+      +'</div>';
+      document.body.appendChild(modal);
+
+      modal.querySelector('.lm-close').addEventListener('click', closeLoftModal);
+      modal.addEventListener('click', function(e){ if(e.target === modal) closeLoftModal(); });
+      modal.querySelector('.lm-arrow-prev').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx-1); });
+      modal.querySelector('.lm-arrow-next').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx+1); });
+      modal.querySelector('.lm-btn').addEventListener('click', closeLoftModal);
+      document.addEventListener('keydown', function(e){
+        if(!modal.classList.contains('open')) return;
+        if(e.key === 'Escape') closeLoftModal();
+        if(e.key === 'ArrowLeft') showModalImg(modalCurIdx-1);
+        if(e.key === 'ArrowRight') showModalImg(modalCurIdx+1);
+      });
+    }
+    return modal;
+  }
+
+  var modalImages = [];
+  var modalCurIdx = 0;
+
+  function showModalImg(i){
+    if(!modalImages.length) return;
+    modalCurIdx = (i + modalImages.length) % modalImages.length;
+    var modal = document.getElementById('mb-loftmodal');
+    var wrap = modal.querySelector('.lm-imgwrap');
+    wrap.innerHTML = '<img src="'+modalImages[modalCurIdx]+'" alt=""/>';
+    var counter = modal.querySelector('.lm-counter');
+    counter.textContent = (modalCurIdx+1) + ' / ' + modalImages.length;
+    counter.style.display = modalImages.length > 1 ? 'block' : 'none';
+    var arrows = modal.querySelectorAll('.lm-arrow');
+    [].forEach.call(arrows, function(a){ a.style.display = modalImages.length > 1 ? 'flex' : 'none'; });
+    var dotsWrap = modal.querySelector('.lm-dots');
+    if(modalImages.length > 1 && modalImages.length <= 16){
+      dotsWrap.innerHTML = modalImages.map(function(_,i2){ return '<span class="lm-dot'+(i2===modalCurIdx?' active':'')+'" data-i="'+i2+'"></span>'; }).join('');
+      dotsWrap.style.display = 'flex';
+      [].forEach.call(dotsWrap.querySelectorAll('.lm-dot'), function(d){
+        d.addEventListener('click', function(e){ e.stopPropagation(); showModalImg(parseInt(d.getAttribute('data-i'),10)); });
+      });
+    } else {
+      dotsWrap.style.display = 'none';
+    }
+  }
+
+  function openLoftModal(l){
+    var modal = initModal();
+    modalImages = (l.images && l.images.length) ? l.images : [l.img];
+    modal.querySelector('.lm-name').textContent = l.name;
+    modal.querySelector('.lm-area').textContent = l.area + ' • м. ' + l.metro;
+    modal.querySelector('.lm-desc').textContent = l.desc;
+    modal.querySelector('.lm-cap').textContent = l.cap;
+    modal.querySelector('.lm-price').textContent = l.price;
+    showModalImg(0);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLoftModal(){
+    var modal = document.getElementById('mb-loftmodal');
+    if(modal) modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+function initForm(){
     var form = document.getElementById('mb2-form');
     if(!form){ setTimeout(initForm, 500); return; }
     form.addEventListener('submit', function(e){
@@ -82,53 +135,5 @@
     document.addEventListener('DOMContentLoaded', function(){ renderLofts(); initForm(); });
   } else { renderLofts(); initForm(); }
 
-  function initLightbox(grid, lofts){
-    var lb = document.getElementById("mb-lightbox");
-    if(!lb){
-      lb = document.createElement("div");
-      lb.id = "mb-lightbox";
-      lb.innerHTML = '<div class="lb-close">\u2715</div><div class="lb-arrow lb-prev">\u2039</div><div class="lb-arrow lb-next">\u203a</div><img/><div class="lb-counter"></div>';
-      document.body.appendChild(lb);
-    }
-    var lbImg = lb.querySelector("img");
-    var lbCounter = lb.querySelector(".lb-counter");
-    var lbClose = lb.querySelector(".lb-close");
-    var lbPrev = lb.querySelector(".lb-prev");
-    var lbNext = lb.querySelector(".lb-next");
-    var curImages = [];
-    var curIdx = 0;
-    function show(i){
-      if(!curImages.length) return;
-      curIdx = (i + curImages.length) % curImages.length;
-      lbImg.src = curImages[curIdx];
-      lbCounter.textContent = (curIdx+1) + " / " + curImages.length;
-      lbCounter.style.display = curImages.length > 1 ? "block" : "none";
-    }
-    function openLb(images, startIdx){
-      curImages = images;
-      show(startIdx);
-      lb.classList.add("open");
-    }
-    function closeLb(){ lb.classList.remove("open"); }
-    lbClose.addEventListener("click", closeLb);
-    lbPrev.addEventListener("click", function(e){ e.stopPropagation(); show(curIdx-1); });
-    lbNext.addEventListener("click", function(e){ e.stopPropagation(); show(curIdx+1); });
-    lb.addEventListener("click", function(e){ if(e.target === lb) closeLb(); });
-    document.addEventListener("keydown", function(e){
-      if(!lb.classList.contains("open")) return;
-      if(e.key === "Escape") closeLb();
-      if(e.key === "ArrowLeft") show(curIdx-1);
-      if(e.key === "ArrowRight") show(curIdx+1);
-    });
-    [].forEach.call(grid.querySelectorAll(".loft-card"), function(card, cardIdx){
-      var l = lofts[cardIdx];
-      var images = (l.images && l.images.length) ? l.images : [l.img];
-      [].forEach.call(card.querySelectorAll(".lc-img"), function(imgEl, i){
-        imgEl.addEventListener("click", function(e){
-          e.preventDefault(); e.stopPropagation();
-          openLb(images, i);
-        });
-      });
-    });
-  }
+  
 })();
