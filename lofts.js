@@ -13,65 +13,79 @@
       {name:"Sava",area:"30 м²",cap:"до 20 гостей",metro:"Бауманская",desc:"Уютный лофт с личной верандой в 5 минутах от метро Бауманская. Здесь цвет решает всё — насыщенные оттенки, необычные детали в декоре и уютные качели. Веранда с запахом жареного мяса и без суеты. Электрогриль входит в стоимость.",img:"https://static.tildacdn.com/tild3534-3064-4439-b837-376538343831/_DSC0190.jpg",images:["https://static.tildacdn.com/tild3534-3064-4439-b837-376538343831/_DSC0190.jpg","https://static.tildacdn.com/tild6535-6533-4432-b338-306435353630/_DSC0209.jpg","https://static.tildacdn.com/tild6634-3836-4365-b030-373964643133/_DSC0246.jpg","https://static.tildacdn.com/tild6532-3635-4538-b531-356632306239/_DSC0198.jpg","https://static.tildacdn.com/tild6461-3830-4263-b565-646263336339/6.jpg","https://static.tildacdn.com/tild3334-3035-4436-b965-626436383830/_DSC1241.jpg"],price:"уточняется"}
     ];
     grid.innerHTML = lofts.map(function(l, idx){
-      return '<div class="loft-card" data-idx="'+idx+'">'
-        +'<img class="lc-img" src="'+l.img+'" alt="'+l.name+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>'
-        +'<div class="lc-ov"></div>'
-        +'<div class="lc-body">'
-        +'<div class="lc-name">'+l.name+'</div>'
-        +'<div class="lc-area">'+l.area+' • м. '+l.metro+'</div>'
-        +'</div></div>';
+      var images = (l.images && l.images.length) ? l.images : [l.img];
+      var imgsHtml = images.map(function(src,i){
+        return '<img class="lc-img lc-img-'+i+'" src="'+src+'" alt="'+l.name+'" loading="lazy" data-idx="'+i+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.6s ease;opacity:'+((i===0)?1:0)+'"/>';
+      }).join('');
+      var dotsHtml = images.length > 1
+        ? '<div class="lc-dots">' + images.map(function(_,i){ return '<button class="lc-dot'+(i===0?' active':'')+'" data-i="'+i+'"></button>'; }).join('') + '</div>'
+        : '';
+      var arrowsHtml = images.length > 1
+        ? '<button class="lc-arrow lc-arrow-prev">\u2039</button><button class="lc-arrow lc-arrow-next">\u203a</button>'
+        : '';
+      return '<div class="loft-card" data-idx="'+idx+'">'+
+        imgsHtml +
+        dotsHtml +
+        arrowsHtml +
+        '<div class="lc-ov"></div>'+
+        '<div class="lc-body">'+
+          '<div class="lc-name">'+l.name+'</div>'+
+          '<div class="lc-area">'+l.area+' • м. '+l.metro+'</div>'+
+          '<div class="lc-hover-info">'+
+            '<div class="lc-cap">'+l.cap+'</div>'+
+            '<div class="lc-actions">'+
+              '<button class="lc-btn-detail">Подробнее</button>'+
+              '<a href="#mb2-booking" class="lc-btn-book">Узнать стоимость</a>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
     }).join('');
 
+    // carousel + hover logic
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
-      var img = card.querySelector('.lc-img');
-      card.addEventListener('mouseenter', function(){ img.style.transform='scale(1.06)'; });
-      card.addEventListener('mouseleave', function(){ img.style.transform=''; });
-      card.addEventListener('click', function(){
+      var imgs = card.querySelectorAll('.lc-img');
+      if(imgs.length < 2) return;
+      var dots = card.querySelectorAll('.lc-dot');
+      var prevBtn = card.querySelector('.lc-arrow-prev');
+      var nextBtn = card.querySelector('.lc-arrow-next');
+      var cur = 0;
+      var autoTimer = null;
+      function show(i){
+        imgs[cur].style.opacity = 0;
+        if(dots[cur]) dots[cur].classList.remove('active');
+        cur = (i + imgs.length) % imgs.length;
+        imgs[cur].style.opacity = 1;
+        if(dots[cur]) dots[cur].classList.add('active');
+      }
+      [].forEach.call(dots, function(d){
+        d.addEventListener('click', function(e){ e.stopPropagation(); show(parseInt(d.getAttribute('data-i'),10)); });
+      });
+      if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); show(cur-1); });
+      if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); show(cur+1); });
+      card.addEventListener('mouseenter', function(){ autoTimer = setInterval(function(){ show(cur+1); }, 1800); });
+      card.addEventListener('mouseleave', function(){ clearInterval(autoTimer); autoTimer = null; });
+    });
+
+    // detail button opens modal
+    [].forEach.call(grid.querySelectorAll('.lc-btn-detail'), function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var card = btn.closest('.loft-card');
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
     });
-  }
 
-
-  function initModal(){
-    var modal = document.getElementById('mb-loftmodal');
-    if(!modal){
-      modal = document.createElement('div');
-      modal.id = 'mb-loftmodal';
-      modal.innerHTML = '<div class="lm-box">'
-        +'<div class="lm-close">\u2715</div>'
-        +'<div class="lm-gallery">'
-          +'<div class="lm-imgwrap"></div>'
-          +'<div class="lm-arrow lm-arrow-prev">\u2039</div>'
-          +'<div class="lm-arrow lm-arrow-next">\u203a</div>'
-          +'<div class="lm-counter"></div>'
-          +'<div class="lm-dots"></div>'
-        +'</div>'
-        +'<div class="lm-info">'
-          +'<div class="lm-name"></div>'
-          +'<div class="lm-area"></div>'
-          +'<div class="lm-desc"></div>'
-          +'<div class="lm-cap"></div>'
-          +'<div class="lm-price"></div>'
-          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
-        +'</div>'
-      +'</div>';
-      document.body.appendChild(modal);
-
-      modal.querySelector('.lm-close').addEventListener('click', closeLoftModal);
-      modal.addEventListener('click', function(e){ if(e.target === modal) closeLoftModal(); });
-      modal.querySelector('.lm-arrow-prev').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx-1); });
-      modal.querySelector('.lm-arrow-next').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx+1); });
-      modal.querySelector('.lm-btn').addEventListener('click', closeLoftModal);
-      document.addEventListener('keydown', function(e){
-        if(!modal.classList.contains('open')) return;
-        if(e.key === 'Escape') closeLoftModal();
-        if(e.key === 'ArrowLeft') showModalImg(modalCurIdx-1);
-        if(e.key === 'ArrowRight') showModalImg(modalCurIdx+1);
+    // whole card click also opens modal
+    [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
+      card.addEventListener('click', function(e){
+        if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
+        var idx = parseInt(card.getAttribute('data-idx'), 10);
+        openLoftModal(lofts[idx]);
       });
-    }
-    return modal;
+    });
+
   }
 
   var modalImages = [];
