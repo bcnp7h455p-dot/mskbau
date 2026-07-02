@@ -91,6 +91,46 @@
   var modalImages = [];
   var modalCurIdx = 0;
 
+  function initModal(){
+    var modal = document.getElementById('mb-loftmodal');
+    if(!modal){
+      modal = document.createElement('div');
+      modal.id = 'mb-loftmodal';
+      modal.innerHTML = '<div class="lm-box">'
+        +'<div class="lm-close">\u2715</div>'
+        +'<div class="lm-gallery">'
+          +'<div class="lm-imgwrap"></div>'
+          +'<div class="lm-arrow lm-arrow-prev">\u2039</div>'
+          +'<div class="lm-arrow lm-arrow-next">\u203a</div>'
+          +'<div class="lm-counter"></div>'
+          +'<div class="lm-dots"></div>'
+        +'</div>'
+        +'<div class="lm-info">'
+          +'<div class="lm-name"></div>'
+          +'<div class="lm-area"></div>'
+          +'<div class="lm-desc"></div>'
+          +'<div class="lm-cap"></div>'
+          +'<div class="lm-price"></div>'
+          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'</div>'
+      +'</div>';
+      document.body.appendChild(modal);
+
+      modal.querySelector('.lm-close').addEventListener('click', closeLoftModal);
+      modal.addEventListener('click', function(e){ if(e.target === modal) closeLoftModal(); });
+      modal.querySelector('.lm-arrow-prev').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx-1); });
+      modal.querySelector('.lm-arrow-next').addEventListener('click', function(e){ e.stopPropagation(); showModalImg(modalCurIdx+1); });
+      modal.querySelector('.lm-btn').addEventListener('click', closeLoftModal);
+      document.addEventListener('keydown', function(e){
+        if(!modal.classList.contains('open')) return;
+        if(e.key === 'Escape') closeLoftModal();
+        if(e.key === 'ArrowLeft') showModalImg(modalCurIdx-1);
+        if(e.key === 'ArrowRight') showModalImg(modalCurIdx+1);
+      });
+    }
+    return modal;
+  }
+
   function showModalImg(i){
     if(!modalImages.length) return;
     modalCurIdx = (i + modalImages.length) % modalImages.length;
