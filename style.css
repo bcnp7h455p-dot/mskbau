@@ -158,29 +158,30 @@
   font-size:1.4rem;font-weight:400;
   color:#e8ddd0;text-transform:uppercase;
   letter-spacing:0.05em;margin-bottom:0.2rem;
-  transition:transform 0.3s ease;
 }
-#mb2 .loft-card:hover .lc-name{transform:translateY(-2px)}
 #mb2 .lc-area{
   font-size:0.75rem;font-weight:500;
   text-transform:uppercase;letter-spacing:0.08em;
   color:rgba(232,221,208,0.55);margin-bottom:0;
-  transition:transform 0.3s ease;
 }
-#mb2 .loft-card:hover .lc-area{transform:translateY(-2px)}
 /* hover info block */
-#mb2 .lc-hover-info{
-  max-height:0;opacity:0;overflow:hidden;
-  transition:max-height 0.35s ease,opacity 0.3s ease;
-  margin-top:0;
-  pointer-events:none;
-}
-#mb2 .loft-card:hover .lc-hover-info{
-  max-height:120px;opacity:1;pointer-events:auto;margin-top:0.5rem;
-}
 #mb2 .lc-cap{
   font-size:0.75rem;color:#c9a063;
-  margin-bottom:0.6rem;
+  margin-bottom:0.5rem;margin-top:0.35rem;
+  opacity:0;
+  transition:opacity 0.35s ease;
+}
+#mb2 .loft-card:hover .lc-cap{
+  opacity:1;
+}
+#mb2 .lc-hover-info{
+  opacity:0;
+  transition:opacity 0.35s ease;
+  pointer-events:none;
+  margin-top:0.5rem;
+}
+#mb2 .loft-card:hover .lc-hover-info{
+  opacity:1;pointer-events:auto;
 }
 #mb2 .lc-actions{
   display:flex;gap:0.5rem;
