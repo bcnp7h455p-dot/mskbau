@@ -31,8 +31,8 @@
         '<div class="lc-body">'+
           '<div class="lc-name">'+l.name+'</div>'+
           '<div class="lc-area">'+l.area+' • м. '+l.metro+'</div>'+
+          '<div class="lc-cap">'+l.cap+'</div>'+
           '<div class="lc-hover-info">'+
-            '<div class="lc-cap">'+l.cap+'</div>'+
             '<div class="lc-actions">'+
               '<button class="lc-btn-detail">Подробнее</button>'+
               '<a href="#mb2-booking" class="lc-btn-book">Узнать стоимость</a>'+
@@ -63,7 +63,7 @@
       });
       if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); show(cur-1); });
       if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); show(cur+1); });
-      card.addEventListener('mouseenter', function(){ autoTimer = setInterval(function(){ show(cur+1); }, 1800); });
+      card.addEventListener('mouseenter', function(){ clearInterval(autoTimer); autoTimer = setTimeout(function(){ autoTimer = setInterval(function(){ show(cur+1); }, 2500); }, 600); });
       card.addEventListener('mouseleave', function(){ clearInterval(autoTimer); autoTimer = null; });
     });
 
