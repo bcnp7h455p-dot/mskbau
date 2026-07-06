@@ -173,7 +173,8 @@
   transition:opacity 0.4s ease;
   will-change:opacity;
 }
-#mb2 .loft-card:hover .lc-cap{
+#mb2 .loft-card:hover .lc-cap,
+#mb2 .loft-card.touch-active .lc-cap{
   opacity:1;
 }
 #mb2 .lc-hover-info{
@@ -454,7 +455,7 @@ EVENTS ── */
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
 #mb-loftmodal .lm-video-btn{
-  display:block;width:100%;margin-top:0.6rem;
+  display:inline-block;margin-top:0;margin-left:0.6rem;
   padding:0.75rem 1.5rem;background:transparent;
   border:1px solid rgba(184,146,74,0.45);color:#c9a063;
   font-family:inherit;font-size:0.75rem;font-weight:500;
@@ -464,12 +465,15 @@ EVENTS ── */
 }
 .lm-video-btn:hover{background:rgba(184,146,74,0.15)}
 .lm-btn{
-  display:block;text-align:center;width:100%;
+  display:inline-block;text-align:center;
   padding:0.85rem 1.5rem;background:#c9a063;color:#111;
   font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
   border-radius:4px;text-decoration:none;transition:opacity 0.2s;margin-top:auto;
 }
 #mb-loftmodal .lm-btn:hover{opacity:0.85;}
+#mb-loftmodal .lm-info .lm-btn,#mb-loftmodal .lm-info .lm-video-btn{
+  vertical-align:middle;
+}
 @media(max-width:860px){
   #mb-loftmodal{padding:0;}
   #mb-loftmodal .lm-box{flex-direction:column;max-height:100vh;height:100%;border-radius:0;max-width:100%;overflow-y:auto;}

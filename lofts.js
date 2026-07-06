@@ -77,13 +77,33 @@
       });
     });
 
-    // whole card click also opens modal
+    // whole card click: on desktop opens modal, on mobile first shows hover info
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       card.addEventListener('click', function(e){
         if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
+        // На мобильных (touch) — первый клик показывает инфо, второй открывает модал
+        var isTouchDevice = window.matchMedia('(hover:none)').matches;
+        if(isTouchDevice && !e.target.closest('.lc-btn-detail')) {
+          // Если уже активна эта карточка — открываем модал
+          if(card.classList.contains('touch-active')) {
+            var idx = parseInt(card.getAttribute('data-idx'), 10);
+            openLoftModal(lofts[idx]);
+          } else {
+            // Убираем активность с других карточек
+            [].forEach.call(grid.querySelectorAll('.loft-card.touch-active'), function(c){ c.classList.remove('touch-active'); });
+            card.classList.add('touch-active');
+          }
+          return;
+        }
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
+    });
+    // Снимаем touch-active при клике вне карточки
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.loft-card')) {
+        [].forEach.call(grid.querySelectorAll('.loft-card.touch-active'), function(c){ c.classList.remove('touch-active'); });
+      }
     });
 
   }
