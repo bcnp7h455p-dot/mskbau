@@ -111,10 +111,8 @@
           +'<div class="lm-desc"></div>'
           +'<div class="lm-cap"></div>'
           +'<div class="lm-price"></div>'
-          +'<div class="lm-btns" style="display:flex;gap:0.75rem;flex-wrap:wrap;">'
-        +'<a href="#mb2-booking" class="lm-btn" style="flex:1;">Узнать стоимость</a>'
-        +'<button class="lm-btn lm-video-btn" style="flex:1;background:rgba(184,146,74,0.12);border-color:rgba(184,146,74,0.5);color:#b8924a;">▶ Видеообзор</button>'
-        +'</div>'
+          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'<button class="lm-btn lm-video-btn">▶ Видеообзор</button>'
         +'</div>'
       +'</div>';
       document.body.appendChild(modal);
@@ -133,8 +131,9 @@
             var id = url.replace('rutube:','');
             embedUrl = 'https://rutube.ru/play/embed/' + id + '/';
           } else if (url.startsWith('yandex:')) {
-            var ydisk = url.replace('yandex:','');
-            embedUrl = 'https://disk.yandex.ru/embedded/video' + ydisk.replace('https://disk.yandex.ru','');
+            // Яндекс.Диск не поддерживает iframe — открываем в новой вкладке
+            window.open(url.replace('yandex:',''), '_blank');
+            return;
           }
           if (!embedUrl) return;
           // Показываем видео-попап

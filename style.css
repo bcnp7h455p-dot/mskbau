@@ -453,8 +453,18 @@ EVENTS ── */
 #mb-loftmodal .lm-price{
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
-#mb-loftmodal .lm-btn{
-  display:inline-block;text-align:center;
+#mb-loftmodal .lm-video-btn{
+  display:block;width:100%;margin-top:0.6rem;
+  padding:0.75rem 1.5rem;background:transparent;
+  border:1px solid rgba(184,146,74,0.45);color:#c9a063;
+  font-family:inherit;font-size:0.75rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;
+  cursor:pointer;border-radius:2px;
+  transition:background 0.2s,color 0.2s;
+}
+.lm-video-btn:hover{background:rgba(184,146,74,0.15)}
+.lm-btn{
+  display:block;text-align:center;width:100%;
   padding:0.85rem 1.5rem;background:#c9a063;color:#111;
   font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
   border-radius:4px;text-decoration:none;transition:opacity 0.2s;margin-top:auto;
