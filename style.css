@@ -456,54 +456,53 @@ EVENTS ── */
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
 /* ── Кнопки в попапе ── */
+#mb-loftmodal /* Глобальный lm-btn (вне попапа) */
+/* ── Попап: кнопки рядом ── */
+#mb-loftmodal .lm-btns-wrap{
+  display:flex;
+  gap:0.6rem;
+  margin-top:0.75rem;
+}
 #mb-loftmodal .lm-btn{
+  flex:1;
   display:block;
-  width:100%;
-  box-sizing:border-box;
-  padding:0.9rem 1rem;
-  margin-bottom:0.7rem;
+  padding:0.65rem 0.5rem;
   background:#c9a063;
   color:#111;
   border:none;
   font-family:inherit;
-  font-size:0.72rem;
+  font-size:0.66rem;
   font-weight:700;
   text-transform:uppercase;
-  letter-spacing:0.14em;
+  letter-spacing:0.12em;
   text-align:center;
   text-decoration:none;
   border-radius:3px;
   cursor:pointer;
+  white-space:nowrap;
   transition:opacity 0.2s;
 }
 #mb-loftmodal .lm-btn:hover{opacity:0.82;}
 #mb-loftmodal .lm-video-btn{
+  flex:1;
   display:block;
-  width:100%;
-  box-sizing:border-box;
-  padding:0.9rem 1rem;
-  margin-bottom:0;
+  padding:0.65rem 0.5rem;
   background:transparent;
   color:#c9a063;
   border:1px solid rgba(201,160,99,0.5);
   font-family:inherit;
-  font-size:0.72rem;
+  font-size:0.66rem;
   font-weight:600;
   text-transform:uppercase;
-  letter-spacing:0.14em;
+  letter-spacing:0.12em;
   text-align:center;
   border-radius:3px;
   cursor:pointer;
+  white-space:nowrap;
   transition:background 0.2s;
 }
 #mb-loftmodal .lm-video-btn:hover{background:rgba(201,160,99,0.1);}
-/* Глобальный lm-btn (вне попапа) */
-.lm-btn{
-  display:inline-block;text-align:center;
-  padding:0.85rem 1.5rem;background:#c9a063;color:#111;
-  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
-  border-radius:4px;text-decoration:none;transition:opacity 0.2s;margin-top:auto;
-}
+
 @media(max-width:860px){
   #mb-loftmodal{padding:0;}
   #mb-loftmodal .lm-box{flex-direction:column;max-height:100vh;height:100%;border-radius:0;max-width:100%;overflow-y:auto;}

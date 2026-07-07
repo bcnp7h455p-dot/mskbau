@@ -136,8 +136,10 @@
           +'<div class="lm-desc"></div>'
           +'<div class="lm-cap"></div>'
           +'<div class="lm-price"></div>'
-          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
-        +'<button class="lm-btn lm-video-btn">▶ Видеообзор</button>'
+          +'<div class="lm-btns-wrap">'
+        +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'<button class="lm-video-btn">▶ Видео</button>'
+        +'</div>'
         +'</div>'
       +'</div>';
       document.body.appendChild(modal);
