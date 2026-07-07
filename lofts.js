@@ -77,32 +77,37 @@
       });
     });
 
-    // whole card click: on desktop opens modal, on mobile first shows hover info
+    // whole card click
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       card.addEventListener('click', function(e){
+        // lc-btn-book — всегда к форме, не перехватываем
         if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
-        // На мобильных (touch) — первый клик показывает инфо, второй открывает модал
+        // lc-btn-detail — всегда открывает модал
+        if(e.target.closest('.lc-btn-detail')) {
+          var idx = parseInt(card.getAttribute('data-idx'), 10);
+          openLoftModal(lofts[idx]);
+          return;
+        }
         var isTouchDevice = window.matchMedia('(hover:none)').matches;
-        if(isTouchDevice && !e.target.closest('.lc-btn-detail')) {
-          // Если уже активна эта карточка — открываем модал
-          if(card.classList.contains('touch-active')) {
-            var idx = parseInt(card.getAttribute('data-idx'), 10);
-            openLoftModal(lofts[idx]);
+        if(isTouchDevice) {
+          // На мобиле: тап скрывает инфо (добавляет touch-clean), повторный — возвращает
+          if(card.classList.contains('touch-clean')) {
+            card.classList.remove('touch-clean');
           } else {
-            // Убираем активность с других карточек
-            [].forEach.call(grid.querySelectorAll('.loft-card.touch-active'), function(c){ c.classList.remove('touch-active'); });
-            card.classList.add('touch-active');
+            [].forEach.call(grid.querySelectorAll('.loft-card.touch-clean'), function(c){ c.classList.remove('touch-clean'); });
+            card.classList.add('touch-clean');
           }
           return;
         }
+        // Десктоп — открываем модал
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
     });
-    // Снимаем touch-active при клике вне карточки
+    // Снимаем touch-clean при клике вне карточки
     document.addEventListener('click', function(e){
       if(!e.target.closest('.loft-card')) {
-        [].forEach.call(grid.querySelectorAll('.loft-card.touch-active'), function(c){ c.classList.remove('touch-active'); });
+        [].forEach.call(grid.querySelectorAll('.loft-card.touch-clean'), function(c){ c.classList.remove('touch-clean'); });
       }
     });
 
