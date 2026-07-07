@@ -77,38 +77,13 @@
       });
     });
 
-    // whole card click
+    // whole card click also opens modal
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       card.addEventListener('click', function(e){
-        // lc-btn-book — всегда к форме, не перехватываем
         if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
-        // lc-btn-detail — всегда открывает модал
-        if(e.target.closest('.lc-btn-detail')) {
-          var idx = parseInt(card.getAttribute('data-idx'), 10);
-          openLoftModal(lofts[idx]);
-          return;
-        }
-        var isTouchDevice = window.matchMedia('(hover:none)').matches;
-        if(isTouchDevice) {
-          // На мобиле: тап скрывает инфо (добавляет touch-clean), повторный — возвращает
-          if(card.classList.contains('touch-clean')) {
-            card.classList.remove('touch-clean');
-          } else {
-            [].forEach.call(grid.querySelectorAll('.loft-card.touch-clean'), function(c){ c.classList.remove('touch-clean'); });
-            card.classList.add('touch-clean');
-          }
-          return;
-        }
-        // Десктоп — открываем модал
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
-    });
-    // Снимаем touch-clean при клике вне карточки
-    document.addEventListener('click', function(e){
-      if(!e.target.closest('.loft-card')) {
-        [].forEach.call(grid.querySelectorAll('.loft-card.touch-clean'), function(c){ c.classList.remove('touch-clean'); });
-      }
     });
 
   }
@@ -136,10 +111,8 @@
           +'<div class="lm-desc"></div>'
           +'<div class="lm-cap"></div>'
           +'<div class="lm-price"></div>'
-          +'<div class="lm-btns-wrap">'
-        +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
-        +'<button class="lm-video-btn">▶ Видео</button>'
-        +'</div>'
+          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'<button class="lm-btn lm-video-btn">▶ Видеообзор</button>'
         +'</div>'
       +'</div>';
       document.body.appendChild(modal);

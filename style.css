@@ -5,7 +5,6 @@
 
 /* ── RESET ── */
 #mb2,#mb2 *{box-sizing:border-box;margin:0;padding:0}
-html,body{overflow-x:hidden;max-width:100%;}
 #mb2 a{text-decoration:none;color:inherit}
 #mb2 img{display:block;max-width:100%}
 #mb2{font-family:'Raleway',sans-serif;font-weight:300;background:#111;color:#e8ddd0;-webkit-font-smoothing:antialiased}
@@ -170,29 +169,24 @@ html,body{overflow-x:hidden;max-width:100%;}
 #mb2 .lc-cap{
   font-size:0.75rem;color:#c9a063;
   margin-bottom:0.5rem;margin-top:0.35rem;
+  opacity:0;
   transition:opacity 0.4s ease;
   will-change:opacity;
 }
-/* По умолчанию на touch-устройствах cap виден */
-#mb2 .loft-card.touch-clean .lc-cap{opacity:0;}
+#mb2 .loft-card:hover .lc-cap{
+  opacity:1;
+}
 #mb2 .lc-hover-info{
+  opacity:0;
+  visibility:hidden;
+  transition:opacity 0.4s ease,visibility 0s linear 0.4s;
   margin-top:0.5rem;
   will-change:opacity;
-  transition:opacity 0.4s ease,visibility 0s linear 0.4s;
 }
-@media(hover:hover){
-  #mb2 .lc-hover-info{opacity:0;visibility:hidden;}
-  #mb2 .loft-card:hover .lc-hover-info{
-    opacity:1;visibility:visible;
-    transition:opacity 0.4s ease,visibility 0s linear 0s;
-  }
-}
-@media(hover:none){
-  #mb2 .lc-hover-info{opacity:1;visibility:visible;pointer-events:auto;}
-  #mb2 .loft-card.touch-clean .lc-hover-info{
-    opacity:0;visibility:hidden;pointer-events:none;
-    transition:opacity 0.4s ease,visibility 0s linear 0.4s;
-  }
+#mb2 .loft-card:hover .lc-hover-info{
+  opacity:1;
+  visibility:visible;
+  transition:opacity 0.4s ease,visibility 0s linear 0s;
 }
 #mb2 .lc-actions{
   display:flex;gap:0.5rem;
@@ -437,6 +431,10 @@ EVENTS ── */
 }
 #mb-loftmodal .lm-dot{width:6px;height:6px;border-radius:50%;background:rgba(232,221,208,0.35);cursor:pointer;}
 #mb-loftmodal .lm-dot.active{background:#c9a063;}
+#mb-loftmodal .lm-info{
+  flex:1 1 40%;padding:2.5rem 2.25rem;overflow-y:auto;
+  display:flex;flex-direction:column;
+}
 #mb-loftmodal .lm-name{
   font-family:'Sverdlovsk','Playfair Display',serif;
   font-size:2rem;color:#e8ddd0;text-transform:uppercase;
@@ -455,56 +453,38 @@ EVENTS ── */
 #mb-loftmodal .lm-price{
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
-/* ── Кнопки в попапе ── */
-#mb-loftmodal /* Глобальный lm-btn (вне попапа) */
-/* ── Попап: кнопки рядом ── */
-#mb-loftmodal .lm-btns-wrap{
-  display:flex;
-  gap:0.6rem;
-  margin-top:0.75rem;
+#mb-loftmodal .lm-video-btn{
+  display:block;width:100%;margin-top:0.6rem;
+  padding:0.75rem 1.5rem;background:transparent;
+  border:1px solid rgba(184,146,74,0.45);color:#c9a063;
+  font-family:inherit;font-size:0.75rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;
+  cursor:pointer;border-radius:2px;
+  transition:background 0.2s,color 0.2s;
+}
+.lm-video-btn:hover{background:rgba(184,146,74,0.15)}
+.lm-btn{
+  display:block;text-align:center;width:100%;
+  padding:0.85rem 1.5rem;background:#c9a063;color:#111;
+  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
+  border-radius:4px;text-decoration:none;transition:opacity 0.2s;margin-top:auto;
+  box-sizing:border-box;
 }
 #mb-loftmodal .lm-btn{
-  flex:1;
-  display:block;
-  padding:0.65rem 0.5rem;
-  background:#c9a063;
-  color:#111;
-  border:none;
-  font-family:inherit;
-  font-size:0.66rem;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.12em;
-  text-align:center;
-  text-decoration:none;
-  border-radius:3px;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:opacity 0.2s;
+  margin-bottom:0.7rem;
 }
-#mb-loftmodal .lm-btn:hover{opacity:0.82;}
 #mb-loftmodal .lm-video-btn{
-  flex:1;
-  display:block;
-  padding:0.65rem 0.5rem;
-  background:transparent;
-  color:#c9a063;
-  border:1px solid rgba(201,160,99,0.5);
-  font-family:inherit;
-  font-size:0.66rem;
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:0.12em;
-  text-align:center;
-  border-radius:3px;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:background 0.2s;
+  display:block;width:100%;box-sizing:border-box;
+  padding:0.85rem 1.5rem;background:transparent;color:#c9a063;
+  border:1px solid rgba(201,160,99,0.5);font-family:inherit;
+  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
+  border-radius:4px;cursor:pointer;transition:background 0.2s;
 }
 #mb-loftmodal .lm-video-btn:hover{background:rgba(201,160,99,0.1);}
-
+#mb-loftmodal .lm-btn:hover{opacity:0.85;}
 @media(max-width:860px){
   #mb-loftmodal{padding:0;}
   #mb-loftmodal .lm-box{flex-direction:column;max-height:100vh;height:100%;border-radius:0;max-width:100%;overflow-y:auto;}
   #mb-loftmodal .lm-gallery{aspect-ratio:4/3;flex:none;}
-  }
+  #mb-loftmodal .lm-info{flex:none;padding:1.5rem;}
+}
