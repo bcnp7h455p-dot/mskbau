@@ -27,11 +27,6 @@
   text-transform:uppercase;
 }
 #mb2 .h-nav{display:none}
-/* Touch: info-hidden скрывает весь lc-body кроме карусели */
-@media(hover:none){
-  #mb2 .loft-card.info-hidden .lc-body{opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
-  #mb2 .loft-card .lc-body{transition:opacity 0.3s ease;}
-}
 #mb2 .h-logo img{height:2.4em!important;width:2.4em!important;vertical-align:-0.65em!important;filter:none!important;display:inline-block!important}
 #mb2 .h-btn{
   padding:0.5rem 1.2rem;
@@ -174,28 +169,24 @@
 #mb2 .lc-cap{
   font-size:0.75rem;color:#c9a063;
   margin-bottom:0.5rem;margin-top:0.35rem;
+  opacity:0;
   transition:opacity 0.4s ease;
+  will-change:opacity;
 }
-@media(hover:hover){
-  #mb2 .lc-cap{opacity:0;}
-  #mb2 .loft-card:hover .lc-cap{opacity:1;}
-}
-@media(hover:none){
-  #mb2 .lc-cap{opacity:1;}
+#mb2 .loft-card:hover .lc-cap{
+  opacity:1;
 }
 #mb2 .lc-hover-info{
-  margin-top:0.5rem;
+  opacity:0;
+  visibility:hidden;
   transition:opacity 0.4s ease,visibility 0s linear 0.4s;
+  margin-top:0.5rem;
+  will-change:opacity;
 }
-@media(hover:hover){
-  #mb2 .lc-hover-info{opacity:0;visibility:hidden;}
-  #mb2 .loft-card:hover .lc-hover-info{
-    opacity:1;visibility:visible;
-    transition:opacity 0.4s ease,visibility 0s linear 0s;
-  }
-}
-@media(hover:none){
-  #mb2 .lc-hover-info{opacity:1;visibility:visible;pointer-events:auto;}
+#mb2 .loft-card:hover .lc-hover-info{
+  opacity:1;
+  visibility:visible;
+  transition:opacity 0.4s ease,visibility 0s linear 0s;
 }
 #mb2 .lc-actions{
   display:flex;gap:0.5rem;

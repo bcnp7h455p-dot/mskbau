@@ -35,6 +35,7 @@
           '<div class="lc-hover-info">'+
             '<div class="lc-actions">'+
               '<button class="lc-btn-detail">Подробнее</button>'+
+              '<a href="#mb2-booking" class="lc-btn-book">Узнать стоимость</a>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -76,37 +77,13 @@
       });
     });
 
-    // whole card click: desktop opens modal, mobile toggles info visibility
+    // whole card click also opens modal
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       card.addEventListener('click', function(e){
-        if(e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
-        // lc-btn-detail always opens modal
-        if(e.target.closest('.lc-btn-detail')) {
-          var idx = parseInt(card.getAttribute('data-idx'), 10);
-          openLoftModal(lofts[idx]);
-          return;
-        }
-        var isTouchDevice = window.matchMedia('(hover:none)').matches;
-        if(isTouchDevice) {
-          // Toggle: tap hides all info (shows only carousel), tap again restores
-          if(card.classList.contains('info-hidden')) {
-            card.classList.remove('info-hidden');
-          } else {
-            [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
-            card.classList.add('info-hidden');
-          }
-          return;
-        }
-        // Desktop: click anywhere opens modal
+        if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
-    });
-    // Remove info-hidden when clicking outside cards
-    document.addEventListener('click', function(e){
-      if(!e.target.closest('.loft-card')) {
-        [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
-      }
     });
 
   }
