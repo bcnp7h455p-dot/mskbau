@@ -35,7 +35,6 @@
           '<div class="lc-hover-info">'+
             '<div class="lc-actions">'+
               '<button class="lc-btn-detail">Подробнее</button>'+
-              '<a href="#mb2-booking" class="lc-btn-book">Узнать стоимость</a>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -77,13 +76,33 @@
       });
     });
 
-    // whole card click also opens modal
+    // whole card click
     [].forEach.call(grid.querySelectorAll('.loft-card'), function(card){
       card.addEventListener('click', function(e){
-        if(e.target.closest('.lc-btn-book') || e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
+        if(e.target.closest('.lc-arrow') || e.target.closest('.lc-dot')) return;
+        if(e.target.closest('.lc-btn-detail')) {
+          var idx = parseInt(card.getAttribute('data-idx'), 10);
+          openLoftModal(lofts[idx]);
+          return;
+        }
+        var isTouchDevice = window.matchMedia('(hover:none)').matches;
+        if(isTouchDevice) {
+          if(card.classList.contains('info-hidden')) {
+            card.classList.remove('info-hidden');
+          } else {
+            [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
+            card.classList.add('info-hidden');
+          }
+          return;
+        }
         var idx = parseInt(card.getAttribute('data-idx'), 10);
         openLoftModal(lofts[idx]);
       });
+    });
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.loft-card')) {
+        [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
+      }
     });
 
   }
@@ -111,8 +130,10 @@
           +'<div class="lm-desc"></div>'
           +'<div class="lm-cap"></div>'
           +'<div class="lm-price"></div>'
-          +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
-        +'<button class="lm-btn lm-video-btn">▶ Видеообзор</button>'
+          +'<div class="lm-btns-wrap">'
+        +'<a href="#mb2-booking" class="lm-btn">Узнать стоимость</a>'
+        +'<button class="lm-video-btn">▶ Видео</button>'
+        +'</div>'
         +'</div>'
       +'</div>';
       document.body.appendChild(modal);
