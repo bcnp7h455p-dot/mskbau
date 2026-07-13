@@ -249,9 +249,25 @@ function initForm(){
     });
   }
 
+  function ensureHeroAutoplay(){
+    var video = document.querySelector('.hero video');
+    if(!video) return;
+    var tryPlay = function(){
+      var p = video.play();
+      if(p && typeof p.catch === 'function') p.catch(function(){});
+    };
+    tryPlay();
+    var resume = function(){ if(video.paused) tryPlay(); };
+    var events = ['touchstart','scroll','click','pointerdown'];
+    events.forEach(function(evt){ document.addEventListener(evt, resume, {passive:true}); });
+    video.addEventListener('playing', function(){
+      events.forEach(function(evt){ document.removeEventListener(evt, resume); });
+    });
+  }
+
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', function(){ renderLofts(); initForm(); });
-  } else { renderLofts(); initForm(); }
+    document.addEventListener('DOMContentLoaded', function(){ renderLofts(); initForm(); ensureHeroAutoplay(); });
+  } else { renderLofts(); initForm(); ensureHeroAutoplay(); }
 
   
 })();
