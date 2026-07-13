@@ -535,19 +535,14 @@ EVENTS ── */
 #mb2 .adv-item:hover{
   transform:translateY(-4px);
   border-color:rgba(201,160,99,0.45);
-  box-shadow:0 14px 30px -12px rgba(0,0,0,0.55);
 }
 #mb2 .adv-item:hover::before{opacity:1}
-#mb2 .adv-item::after{
-  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
-  background:linear-gradient(120deg,transparent,rgba(201,160,99,0.25),transparent);
-  transform:skewX(-20deg);animation:btnShine 3.6s ease-in-out infinite;pointer-events:none;
-}
-#mb2 .adv-item:nth-child(2)::after{animation-delay:0.4s}
-#mb2 .adv-item:nth-child(3)::after{animation-delay:0.8s}
-#mb2 .adv-item:nth-child(4)::after{animation-delay:1.2s}
-#mb2 .adv-item:nth-child(5)::after{animation-delay:1.6s}
-#mb2 .adv-item:nth-child(6)::after{animation-delay:2.0s}
+#mb2 .adv-item{animation:btnGlow 3.6s ease-in-out infinite}
+#mb2 .adv-item:nth-child(2){animation-delay:0.4s}
+#mb2 .adv-item:nth-child(3){animation-delay:0.8s}
+#mb2 .adv-item:nth-child(4){animation-delay:1.2s}
+#mb2 .adv-item:nth-child(5){animation-delay:1.6s}
+#mb2 .adv-item:nth-child(6){animation-delay:2.0s}
 #mb2 .adv-icon{
   display:flex;align-items:center;justify-content:center;
   width:2.75rem;height:2.75rem;border-radius:50%;
@@ -606,4 +601,6 @@ EVENTS ── */
   #mb2 .loft-card.info-hidden .lc-ov{opacity:0;}
   #mb2 .lc-cap{opacity:1;}
   #mb2 .lc-hover-info{opacity:1;visibility:visible;pointer-events:auto;}
+  /* iOS "залипает" на :hover после тапа — карусель/стрелки на touch не завязываем на hover вообще */
+  #mb2 .lc-dots,#mb2 .lc-arrow{opacity:0!important;pointer-events:none!important;}
 }
