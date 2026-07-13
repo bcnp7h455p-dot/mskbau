@@ -448,7 +448,7 @@ EVENTS ── */
 
 
 /* ── LOFT MODAL ── */
-#mb-loftmodal{position:fixed;inset:0;z-index:9999;background:rgba(8,8,8,0.96);display:none;align-items:center;justify-content:center;padding:2rem;}
+#mb-loftmodal{position:fixed;inset:0;z-index:9999;background:rgba(8,8,8,0.96);display:none;align-items:center;justify-content:center;padding:2rem;font-family:'Raleway',sans-serif;font-weight:300;}
 #mb-loftmodal.open{display:flex;}
 #mb-loftmodal .lm-box{
   display:flex;width:100%;max-width:1100px;max-height:88vh;
@@ -493,7 +493,7 @@ EVENTS ── */
   display:flex;flex-direction:column;
 }
 #mb-loftmodal .lm-name{
-  font-family:'Sverdlovsk','Playfair Display',serif;
+  font-family:'Oswald',sans-serif;font-weight:600;
   font-size:2rem;color:#e8ddd0;text-transform:uppercase;
   letter-spacing:0.04em;margin-bottom:0.5rem;
 }
@@ -518,14 +518,36 @@ EVENTS ── */
 }
 
 /* ── ПРЕИМУЩЕСТВА ── */
-#mb2 .adv-section{background:#161616;padding:3rem 1.5rem}
-#mb2 .adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(232,221,208,0.06)}
-#mb2 .adv-item{background:#161616;padding:1.5rem 1.25rem}
-#mb2 .adv-icon{font-size:1.4rem;margin-bottom:0.6rem}
-#mb2 .adv-title{font-family:'Unbounded',sans-serif;font-size:0.72rem;font-weight:500;color:#e8ddd0;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem}
-#mb2 .adv-desc{font-size:0.72rem;color:rgba(232,221,208,0.55);line-height:1.55}
+#mb2 .adv-section{background:#161616;padding:3.5rem 1.5rem}
+#mb2 .adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;background:transparent}
+#mb2 .adv-item{
+  background:linear-gradient(160deg,#1d1d1d 0%,#161616 100%);
+  border:1px solid rgba(232,221,208,0.08);border-radius:10px;
+  padding:1.75rem 1.25rem;position:relative;overflow:hidden;
+  transition:transform 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease;
+}
+#mb2 .adv-item::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#c9a55a,transparent);
+  opacity:0;transition:opacity 0.25s ease;
+}
+#mb2 .adv-item:hover{
+  transform:translateY(-4px);
+  border-color:rgba(201,160,99,0.45);
+  box-shadow:0 14px 30px -12px rgba(0,0,0,0.55);
+}
+#mb2 .adv-item:hover::before{opacity:1}
+#mb2 .adv-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:2.75rem;height:2.75rem;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,rgba(201,160,99,0.22),rgba(201,160,99,0.04));
+  border:1px solid rgba(201,160,99,0.35);
+  font-size:1.25rem;margin-bottom:1rem;
+}
+#mb2 .adv-title{font-family:'Unbounded',sans-serif;font-size:0.72rem;font-weight:500;color:#e8ddd0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+#mb2 .adv-desc{font-size:0.72rem;color:rgba(232,221,208,0.5);line-height:1.6}
 @media(min-width:768px){#mb2 .adv-grid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:1200px){#mb2 .adv-grid{grid-template-columns:repeat(6,1fr)}}
+@media(min-width:1200px){#mb2 .adv-grid{grid-template-columns:repeat(6,1fr);gap:1.1rem}}
 
 /* ── Кнопки в попапе ── */
 #mb-loftmodal .lm-btns-wrap{display:flex;align-items:stretch;gap:0.6rem;margin-top:0.75rem;}
