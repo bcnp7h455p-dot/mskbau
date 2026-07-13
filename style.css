@@ -9,6 +9,17 @@
 #mb2 img{display:block;max-width:100%}
 #mb2{font-family:'Raleway',sans-serif;font-weight:300;background:#111;color:#e8ddd0;-webkit-font-smoothing:antialiased}
 
+/* ── ПРЕМИАЛЬНЫЕ КНОПКИ: авто-блик (работает и на touch, не требует hover) ── */
+@keyframes btnShine{
+  0%{left:-60%}
+  22%{left:130%}
+  100%{left:130%}
+}
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(201,160,99,0)}
+  50%{box-shadow:0 0 14px 1px rgba(201,160,99,0.45)}
+}
+
 /* ── DISPLAY FONT ── */
 #mb2 .f-display{font-family:'Sverdlovsk','Playfair Display',serif}
 
@@ -30,13 +41,15 @@
 #mb2 .h-logo img{height:2.4em!important;width:2.4em!important;vertical-align:-0.65em!important;filter:none!important;display:inline-block!important}
 #mb2 .h-btn{
   padding:0.5rem 1.2rem;
-  border:1px solid rgba(232,221,208,0.3);
+  border:1px solid rgba(184,146,74,0.5);
   font-size:0.62rem;font-weight:500;
   text-transform:uppercase;letter-spacing:0.2em;
-  color:#e8ddd0;transition:all 0.2s;
+  color:#e8ddd0;transition:all 0.2s ease;
   white-space:nowrap;
+  animation:btnGlow 3.2s ease-in-out infinite;animation-delay:1.2s;
 }
-#mb2 .h-btn:hover,#mb2 .h-btn:active{background:rgba(232,221,208,0.08)}
+#mb2 .h-btn:hover{background:rgba(184,146,74,0.15);border-color:#c9a55a;color:#f0e6d2}
+#mb2 .h-btn:active{transform:scale(0.97)}
 
 /* ── HERO ── */
 #mb2 .hero{
@@ -83,22 +96,44 @@
   margin-bottom:1.75rem;
 }
 #mb2 .btn-gold{
-  padding:1rem 2rem;background:#b8924a;
+  padding:1rem 2rem;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#d9b871 0%,#b8924a 55%,#a17d3f 100%);
   font-size:0.68rem;font-weight:600;
   text-transform:uppercase;letter-spacing:0.22em;
-  color:#111;transition:background 0.2s;
+  color:#181410;transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease;
   display:block;text-align:center;
   border:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3),0 10px 24px -8px rgba(184,146,74,0.6),inset 0 1px 0 rgba(255,255,255,0.35);
 }
-#mb2 .btn-gold:hover{background:#c9a55a}
+#mb2 .btn-gold::after{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transform:skewX(-20deg);animation:btnShine 3.2s ease-in-out infinite;
+}
+#mb2 .btn-gold:hover{
+  background:linear-gradient(135deg,#e6c988 0%,#c9a55a 55%,#ad8a46 100%);
+  box-shadow:0 4px 10px rgba(0,0,0,0.35),0 14px 32px -8px rgba(184,146,74,0.75),inset 0 1px 0 rgba(255,255,255,0.4);
+  transform:translateY(-2px);
+}
+#mb2 .btn-gold:active{
+  transform:translateY(0) scale(0.97);
+  box-shadow:0 1px 3px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.25);
+}
 #mb2 .btn-out{
   padding:1rem 2rem;
   border:1px solid rgba(232,221,208,0.3);
+  background:rgba(232,221,208,0.02);
   font-size:0.68rem;font-weight:500;
   text-transform:uppercase;letter-spacing:0.22em;
-  color:#e8ddd0;transition:all 0.2s;
+  color:#e8ddd0;transition:all 0.2s ease;
   display:block;text-align:center;
+  animation:btnGlow 3.2s ease-in-out infinite;animation-delay:0.4s;
 }
+#mb2 .btn-out:hover{
+  border-color:#c9a55a;background:rgba(201,160,99,0.14);
+  color:#f0e6d2;transform:translateY(-2px);
+}
+#mb2 .btn-out:active{transform:translateY(0) scale(0.97)}
 #mb2 .hero-badges{
   display:flex;flex-wrap:wrap;gap:0.5rem;
 }
@@ -193,22 +228,29 @@
 }
 #mb2 .lc-btn-detail{
   flex:1;padding:0.5rem 0;
-  background:transparent;border:1px solid rgba(232,221,208,0.35);
+  background:rgba(232,221,208,0.03);border:1px solid rgba(232,221,208,0.35);
   color:#e8ddd0;font-size:0.65rem;font-weight:500;
   text-transform:uppercase;letter-spacing:0.12em;
-  cursor:pointer;transition:all 0.2s;border-radius:3px;
+  cursor:pointer;transition:all 0.2s ease;border-radius:3px;
+  animation:btnGlow 3.2s ease-in-out infinite;animation-delay:2.0s;
 }
-#mb2 .lc-btn-detail:hover{background:rgba(255,255,255,0.1)}
+#mb2 .lc-btn-detail:hover{background:rgba(255,255,255,0.12);border-color:#c9a55a;transform:translateY(-1px)}
 #mb2 .lc-btn-book{
-  flex:1;padding:0.5rem 0;
-  background:#c9a063;border:none;
-  color:#111;font-size:0.65rem;font-weight:600;
+  flex:1;padding:0.5rem 0;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#d9b871 0%,#b8924a 55%,#a17d3f 100%);border:none;
+  color:#181410;font-size:0.65rem;font-weight:600;
   text-transform:uppercase;letter-spacing:0.1em;
   text-align:center;text-decoration:none;
   display:inline-flex;align-items:center;justify-content:center;
-  transition:opacity 0.2s;border-radius:3px;
+  transition:transform 0.2s ease,box-shadow 0.2s ease;border-radius:3px;
+  box-shadow:0 4px 12px -4px rgba(184,146,74,0.6);
 }
-#mb2 .lc-btn-book:hover{opacity:0.85}
+#mb2 .lc-btn-book::after{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transform:skewX(-20deg);animation:btnShine 3.2s ease-in-out infinite;animation-delay:0.8s;
+}
+#mb2 .lc-btn-book:hover{transform:translateY(-1px);box-shadow:0 6px 16px -4px rgba(184,146,74,0.8)}
 /* карусель на карточке */
 #mb2 .lc-dots{
   position:absolute;top:0.75rem;right:0.75rem;
@@ -295,15 +337,30 @@ EVENTS ── */
 #mb2 .fg select option{background:#161616;color:#e8ddd0}
 #mb2 .fg textarea{resize:vertical;min-height:80px}
 #mb2 .f-submit{
-  width:100%;padding:1.1rem;margin-top:0.25rem;
-  background:#b8924a;border:none;
+  width:100%;padding:1.1rem;margin-top:0.25rem;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#d9b871 0%,#b8924a 55%,#a17d3f 100%);border:none;
   font-family:'Raleway',sans-serif;
   font-size:0.7rem;font-weight:600;
   text-transform:uppercase;letter-spacing:0.22em;
-  color:#111;cursor:pointer;transition:background 0.2s;
+  color:#181410;cursor:pointer;
+  transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease;
   -webkit-appearance:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3),0 10px 24px -8px rgba(184,146,74,0.6),inset 0 1px 0 rgba(255,255,255,0.35);
 }
-#mb2 .f-submit:hover,#mb2 .f-submit:active{background:#c9a55a}
+#mb2 .f-submit::after{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transform:skewX(-20deg);animation:btnShine 3.2s ease-in-out infinite;animation-delay:1.6s;
+}
+#mb2 .f-submit:hover{
+  background:linear-gradient(135deg,#e6c988 0%,#c9a55a 55%,#ad8a46 100%);
+  box-shadow:0 4px 10px rgba(0,0,0,0.35),0 14px 32px -8px rgba(184,146,74,0.75),inset 0 1px 0 rgba(255,255,255,0.4);
+  transform:translateY(-2px);
+}
+#mb2 .f-submit:active{
+  transform:translateY(0) scale(0.98);
+  box-shadow:0 1px 3px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.25);
+}
 #mb2 .f-note{font-size:0.6rem;color:rgba(232,221,208,0.2);text-align:center;margin-top:0.75rem;letter-spacing:0.06em}
 #mb2 .f-ok{display:none;text-align:center;padding:3rem 1rem}
 #mb2 .f-ok h3{
@@ -453,35 +510,6 @@ EVENTS ── */
 #mb-loftmodal .lm-price{
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
-#mb-loftmodal .lm-video-btn{
-  display:block;width:100%;margin-top:0.6rem;
-  padding:0.75rem 1.5rem;background:transparent;
-  border:1px solid rgba(184,146,74,0.45);color:#c9a063;
-  font-family:inherit;font-size:0.75rem;font-weight:500;
-  text-transform:uppercase;letter-spacing:0.12em;
-  cursor:pointer;border-radius:2px;
-  transition:background 0.2s,color 0.2s;
-}
-.lm-video-btn:hover{background:rgba(184,146,74,0.15)}
-.lm-btn{
-  display:block;text-align:center;width:100%;
-  padding:0.85rem 1.5rem;background:#c9a063;color:#111;
-  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
-  border-radius:4px;text-decoration:none;transition:opacity 0.2s;margin-top:auto;
-  box-sizing:border-box;
-}
-#mb-loftmodal .lm-btn{
-  margin-bottom:0.7rem;
-}
-#mb-loftmodal .lm-video-btn{
-  display:block;width:100%;box-sizing:border-box;
-  padding:0.85rem 1.5rem;background:transparent;color:#c9a063;
-  border:1px solid rgba(201,160,99,0.5);font-family:inherit;
-  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
-  border-radius:4px;cursor:pointer;transition:background 0.2s;
-}
-#mb-loftmodal .lm-video-btn:hover{background:rgba(201,160,99,0.1);}
-#mb-loftmodal .lm-btn:hover{opacity:0.85;}
 @media(max-width:860px){
   #mb-loftmodal{padding:0;}
   #mb-loftmodal .lm-box{flex-direction:column;max-height:100vh;height:100%;border-radius:0;max-width:100%;overflow-y:auto;}
@@ -500,27 +528,43 @@ EVENTS ── */
 @media(min-width:1200px){#mb2 .adv-grid{grid-template-columns:repeat(6,1fr)}}
 
 /* ── Кнопки в попапе ── */
-#mb-loftmodal .lm-btns-wrap{display:flex;gap:0.6rem;margin-top:0.75rem;}
-#mb-loftmodal .lm-btn{
-  flex:1;display:block;padding:0.85rem 0.5rem;
-  background:#c9a063;color:#111;border:none;
+#mb-loftmodal .lm-btns-wrap{display:flex;align-items:stretch;gap:0.6rem;margin-top:0.75rem;}
+#mb-loftmodal .lm-btn,
+#mb-loftmodal .lm-video-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:0.85rem 0.5rem;margin:0;position:relative;overflow:hidden;
   font-family:inherit;font-size:0.72rem;font-weight:700;
   text-transform:uppercase;letter-spacing:0.12em;
   text-align:center;text-decoration:none;
-  border-radius:3px;cursor:pointer;transition:opacity 0.2s;
-  box-sizing:border-box;
+  border-radius:3px;cursor:pointer;
+  box-sizing:border-box;line-height:1.2;
+  transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease;
 }
-#mb-loftmodal .lm-btn:hover{opacity:0.82;}
+#mb-loftmodal .lm-btn{
+  background:linear-gradient(135deg,#d9b871 0%,#b8924a 55%,#a17d3f 100%);
+  color:#181410;border:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3),0 8px 20px -6px rgba(184,146,74,0.6),inset 0 1px 0 rgba(255,255,255,0.35);
+}
+#mb-loftmodal .lm-btn::after{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transform:skewX(-20deg);animation:btnShine 3.2s ease-in-out infinite;animation-delay:2.4s;
+}
+#mb-loftmodal .lm-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 10px rgba(0,0,0,0.35),0 12px 28px -6px rgba(184,146,74,0.75),inset 0 1px 0 rgba(255,255,255,0.4);
+}
+#mb-loftmodal .lm-btn:active{transform:translateY(0) scale(0.97)}
 #mb-loftmodal .lm-video-btn{
-  flex:1;display:block;padding:0.85rem 0.5rem;
-  background:transparent;color:#c9a063;
-  border:1px solid rgba(201,160,99,0.5);
-  font-family:inherit;font-size:0.72rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.12em;
-  text-align:center;border-radius:3px;cursor:pointer;
-  transition:background 0.2s;box-sizing:border-box;
+  background:rgba(201,160,99,0.04);color:#c9a063;
+  border:1px solid rgba(201,160,99,0.5);font-weight:600;
+  animation:btnGlow 3.2s ease-in-out infinite;animation-delay:2.8s;
 }
-#mb-loftmodal .lm-video-btn:hover{background:rgba(201,160,99,0.1);}
+#mb-loftmodal .lm-video-btn:hover{
+  background:rgba(201,160,99,0.14);border-color:#c9a55a;color:#f0e6d2;
+  transform:translateY(-2px);
+}
+#mb-loftmodal .lm-video-btn:active{transform:translateY(0) scale(0.97)}
 
 /* ── Touch: info-hidden скрывает инфо на карточке ── */
 @media(hover:none){
