@@ -510,6 +510,7 @@ EVENTS ── */
 #mb-loftmodal .lm-price{
   font-size:1.1rem;color:#e8ddd0;font-weight:500;margin-bottom:1.5rem;
 }
+#mb-loftmodal .lm-price:empty{display:none;margin:0;}
 @media(max-width:860px){
   #mb-loftmodal{padding:0;}
   #mb-loftmodal .lm-box{flex-direction:column;max-height:100vh;height:100%;border-radius:0;max-width:100%;overflow-y:auto;}
@@ -537,6 +538,16 @@ EVENTS ── */
   box-shadow:0 14px 30px -12px rgba(0,0,0,0.55);
 }
 #mb2 .adv-item:hover::before{opacity:1}
+#mb2 .adv-item::after{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(201,160,99,0.25),transparent);
+  transform:skewX(-20deg);animation:btnShine 3.6s ease-in-out infinite;pointer-events:none;
+}
+#mb2 .adv-item:nth-child(2)::after{animation-delay:0.4s}
+#mb2 .adv-item:nth-child(3)::after{animation-delay:0.8s}
+#mb2 .adv-item:nth-child(4)::after{animation-delay:1.2s}
+#mb2 .adv-item:nth-child(5)::after{animation-delay:1.6s}
+#mb2 .adv-item:nth-child(6)::after{animation-delay:2.0s}
 #mb2 .adv-icon{
   display:flex;align-items:center;justify-content:center;
   width:2.75rem;height:2.75rem;border-radius:50%;

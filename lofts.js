@@ -57,6 +57,7 @@
         imgs[cur].style.opacity = 1;
         if(dots[cur]) dots[cur].classList.add('active');
       }
+      card._resetCarousel = function(){ if(cur !== 0) show(0); };
       [].forEach.call(dots, function(d){
         d.addEventListener('click', function(e){ e.stopPropagation(); show(parseInt(d.getAttribute('data-i'),10)); });
       });
@@ -89,8 +90,12 @@
         if(isTouchDevice) {
           if(card.classList.contains('info-hidden')) {
             card.classList.remove('info-hidden');
+            if(card._resetCarousel) card._resetCarousel();
           } else {
-            [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
+            [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){
+              c.classList.remove('info-hidden');
+              if(c._resetCarousel) c._resetCarousel();
+            });
             card.classList.add('info-hidden');
           }
           return;
@@ -101,7 +106,10 @@
     });
     document.addEventListener('click', function(e){
       if(!e.target.closest('.loft-card')) {
-        [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){ c.classList.remove('info-hidden'); });
+        [].forEach.call(grid.querySelectorAll('.loft-card.info-hidden'), function(c){
+          c.classList.remove('info-hidden');
+          if(c._resetCarousel) c._resetCarousel();
+        });
       }
     });
 
