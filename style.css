@@ -601,6 +601,7 @@ EVENTS ── */
   #mb2 .loft-card.info-hidden .lc-ov{opacity:0;}
   #mb2 .lc-cap{opacity:1;}
   #mb2 .lc-hover-info{opacity:1;visibility:visible;pointer-events:auto;}
-  /* iOS "залипает" на :hover после тапа — карусель/стрелки на touch не завязываем на hover вообще */
+  /* iOS "залипает" на :hover после тапа — карусель/стрелки на touch завязываем на info-hidden, не на hover */
   #mb2 .lc-dots,#mb2 .lc-arrow{opacity:0!important;pointer-events:none!important;}
+  #mb2 .loft-card.info-hidden .lc-dots,#mb2 .loft-card.info-hidden .lc-arrow{opacity:1!important;pointer-events:auto!important;}
 }
