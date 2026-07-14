@@ -314,6 +314,7 @@ EVENTS ── */
   border-bottom:1px solid rgba(232,221,208,0.06);
 }
 #mb2 .form-link:last-child{border-bottom:none}
+#mb2 .form-link[href^="tel:"]{font-family:'Poiret One',sans-serif;font-size:1rem;letter-spacing:0.04em}
 #mb2 .form-link:active{color:#e8ddd0}
 #mb2 .form-box{background:#161616;padding:1.75rem 1.25rem}
 #mb2 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
