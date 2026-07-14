@@ -251,9 +251,78 @@ function initForm(){
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var btn = form.querySelector('.f-submit');
-      if(btn) btn.style.display='none';
       var ok = document.getElementById('mb2-ok');
-      if(ok) ok.style.display='block';
+      var realForm = document.getElementById('form2469650801');
+
+      if(!realForm){
+        if(btn) btn.style.display='none';
+        if(ok) ok.style.display='block';
+        return;
+      }
+
+      var nameVal = form.elements['name'] ? form.elements['name'].value : '';
+      var phoneVal = form.elements['phone'] ? form.elements['phone'].value : '';
+      var dateVal = form.elements['date'] ? form.elements['date'].value : '';
+      var loftVal = form.elements['loft'] ? form.elements['loft'].value : '';
+      var commentVal = form.elements['comment'] ? form.elements['comment'].value : '';
+
+      var dateParts = dateVal.split('-');
+      var tildaDate = dateParts.length === 3 ? (dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0]) : '';
+
+      var rName = realForm.querySelector('#input_5557513689601');
+      var rPhone = realForm.querySelector('#input_5557513689602');
+      var rDate = realForm.querySelector('#input_1784029287464');
+      var rLoft = realForm.querySelector('#input_1784029319579');
+      var rComment = realForm.querySelector('#input_5557513689603');
+
+      if(rName) rName.value = nameVal;
+      if(rPhone) rPhone.value = phoneVal;
+      if(rDate) rDate.value = tildaDate;
+      if(rLoft) rLoft.value = loftVal;
+      if(rComment) rComment.value = commentVal;
+
+      var originalBtnText = btn ? btn.textContent : '';
+      if(btn){ btn.disabled = true; btn.textContent = 'Отправка...'; }
+
+      var successBox = realForm.querySelector('.js-successbox');
+      var errorBoxes = realForm.querySelectorAll('.js-errorbox-all');
+      var settled = false;
+      var observer = null;
+
+      function cleanup(){
+        if(observer) observer.disconnect();
+      }
+      function showThanks(){
+        if(settled) return;
+        settled = true;
+        cleanup();
+        if(btn) btn.style.display='none';
+        if(ok) ok.style.display='block';
+      }
+      function showError(){
+        if(settled) return;
+        settled = true;
+        cleanup();
+        if(btn){ btn.disabled = false; btn.textContent = originalBtnText; }
+        alert('Не удалось отправить заявку. Пожалуйста, напишите нам в Telegram или по телефону — контакты ниже.');
+      }
+
+      if(window.MutationObserver){
+        observer = new MutationObserver(function(){
+          if(successBox && successBox.style.display !== 'none'){ showThanks(); return; }
+          for(var i=0;i<errorBoxes.length;i++){
+            if(errorBoxes[i].style.display !== 'none'){ showError(); return; }
+          }
+        });
+        if(successBox) observer.observe(successBox, {attributes:true, attributeFilter:['style']});
+        for(var j=0;j<errorBoxes.length;j++){ observer.observe(errorBoxes[j], {attributes:true, attributeFilter:['style']}); }
+      }
+
+      setTimeout(function(){ if(!settled) showThanks(); }, 6000);
+
+      var realBtn = realForm.querySelector('.t-submit');
+      if(realBtn){ realBtn.click(); }
+      else if(realForm.requestSubmit){ realForm.requestSubmit(); }
     });
   }
 
