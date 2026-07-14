@@ -384,6 +384,7 @@ EVENTS ── */
 #mb2 .ct-btns{display:flex;flex-direction:column;gap:0.75rem}
 #mb2 .ct-btns .btn-gold,
 #mb2 .ct-btns .btn-out{display:block;text-align:center;width:100%}
+#mb2 .ct-btns a[href^="tel:"]{font-family:'Poiret One',sans-serif;font-size:0.9rem;letter-spacing:0.05em}
 
 /* ── MAP ── */
 #mb2 .map-wrap{border-radius:8px;overflow:hidden;border:1px solid rgba(232,221,208,0.1)}
