@@ -2,8 +2,6 @@
    Font: Poiret One (Google Fonts, свободная лицензия) + Raleway
    Mobile-first, 80% mobile users
 */
-@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
-
 /* ── RESET ── */
 #mb2,#mb2 *{box-sizing:border-box;margin:0;padding:0}
 #mb2 a{text-decoration:none;color:inherit}
