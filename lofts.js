@@ -15,8 +15,13 @@
     grid.innerHTML = lofts.map(function(l, idx){
       var images = (l.images && l.images.length) ? l.images : [l.img];
       var imgsHtml = images.map(function(src,i){
-        var srcAttr = i===0 ? 'src="'+src+'"' : 'data-src="'+src+'"';
-        return '<img class="lc-img lc-img-'+i+'" '+srcAttr+' alt="'+l.name+'" loading="lazy" data-idx="'+i+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.6s ease;opacity:'+((i===0)?1:0)+'"/>';
+        var small = src.indexOf('bcnp7h455p-dot.github.io') !== -1 ? src.replace(/\.jpg$/,'-900.jpg') : '';
+        var srcsetVal = small ? small+' 900w, '+src+' 1400w' : '';
+        var attrs = i===0
+          ? 'src="'+src+'"'+(srcsetVal ? ' srcset="'+srcsetVal+'"' : '')
+          : 'data-src="'+src+'"'+(srcsetVal ? ' data-srcset="'+srcsetVal+'"' : '');
+        var sizesAttr = srcsetVal ? ' sizes="(min-width:1200px) 33vw, (min-width:768px) 50vw, 100vw"' : '';
+        return '<img class="lc-img lc-img-'+i+'" '+attrs+sizesAttr+' alt="'+l.name+'" loading="lazy" data-idx="'+i+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.6s ease;opacity:'+((i===0)?1:0)+'"/>';
       }).join('');
       var dotsHtml = images.length > 1
         ? '<div class="lc-dots">' + images.map(function(_,i){ return '<button class="lc-dot'+(i===0?' active':'')+'" data-i="'+i+'"></button>'; }).join('') + '</div>'
@@ -56,6 +61,10 @@
         if(dots[cur]) dots[cur].classList.remove('active');
         cur = (i + imgs.length) % imgs.length;
         if(imgs[cur].dataset.src){
+          if(imgs[cur].dataset.srcset){
+            imgs[cur].srcset = imgs[cur].dataset.srcset;
+            imgs[cur].removeAttribute('data-srcset');
+          }
           imgs[cur].src = imgs[cur].dataset.src;
           imgs[cur].removeAttribute('data-src');
         }
