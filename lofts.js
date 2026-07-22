@@ -289,11 +289,20 @@ function initForm(){
       var rLoft = realForm.querySelector('#input_1784029319579');
       var rComment = realForm.querySelector('#input_5557513689603');
 
-      if(rName) rName.value = nameVal;
-      if(rPhone) rPhone.value = phoneVal;
-      if(rDate) rDate.value = tildaDate;
-      if(rLoft) rLoft.value = loftVal;
-      if(rComment) rComment.value = commentVal;
+      function setAndNotify(el, val){
+        if(!el) return;
+        el.value = val;
+        el.dispatchEvent(new Event('input', {bubbles:true}));
+        el.dispatchEvent(new Event('change', {bubbles:true}));
+        el.dispatchEvent(new Event('keyup', {bubbles:true}));
+        el.dispatchEvent(new Event('blur', {bubbles:true}));
+      }
+      setAndNotify(rName, nameVal);
+      setAndNotify(rPhone, phoneVal);
+      setAndNotify(rDate, tildaDate);
+      setAndNotify(rLoft, loftVal);
+      var commentWithPhone = 'Тел: '+phoneVal+(commentVal ? ' | '+commentVal : '');
+      setAndNotify(rComment, commentWithPhone);
 
       var originalBtnText = btn ? btn.textContent : '';
       if(btn){ btn.disabled = true; btn.textContent = 'Отправка...'; }
@@ -312,6 +321,7 @@ function initForm(){
         cleanup();
         if(btn) btn.style.display='none';
         if(ok) ok.style.display='block';
+        if(window.ym) ym(110820287, 'reachGoal', 'form_submit');
       }
       function showError(){
         if(settled) return;
