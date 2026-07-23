@@ -127,6 +127,16 @@
       }
     });
 
+    var loftParam = new URLSearchParams(location.search).get('loft');
+    if(loftParam){
+      var slugify = function(s){ return s.toLowerCase().replace(/\s+/g,'-'); };
+      var targetLoft = null;
+      for(var li=0; li<lofts.length; li++){
+        if(slugify(lofts[li].name) === loftParam.toLowerCase()){ targetLoft = lofts[li]; break; }
+      }
+      if(targetLoft) openLoftModal(targetLoft);
+    }
+
   }
 
   var modalImages = [];
